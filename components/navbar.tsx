@@ -79,7 +79,10 @@ export default function CourteaseNavbar() {
           {/* Left: Brand */}
           <div className="flex items-center gap-2">
             <Link href="/" className="group flex items-center gap-2">
-              <div className="relative grid h-9 w-9 place-items-center rounded-2xl bg-[var(--teal)] text-white shadow-sm shadow-[var(--teal)]/30 ring-1 ring-white/10 dark:ring-slate-700">
+              <div
+                id="courtease-brand-icon"
+                className="relative grid h-9 w-9 place-items-center rounded-2xl bg-[var(--teal)] text-white shadow-sm shadow-[var(--teal)]/30 ring-1 ring-white/10 dark:ring-slate-700"
+              >
                 <Volleyball className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
               </div>
               <span className="font-semibold tracking-tight text-slate-800 dark:text-slate-100">
@@ -248,6 +251,20 @@ function ThemeToggle({
   resolvedTheme?: string;
   setTheme: (t: string) => void;
 }) {
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <span
+        className="h-9 w-[132px] rounded-2xl border border-slate-200/80 bg-white/80 shadow-sm"
+        aria-hidden="true"
+      />
+    );
+  }
+
   // Pakai resolvedTheme biar akurat saat theme = "system"
   const isDark = (resolvedTheme ?? theme) === "dark";
 

@@ -47,7 +47,7 @@ const LINKS = [
 
 export default function CourteaseNavbar() {
   const pathname = usePathname() || "/";
-  const { theme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
   const [openSearch, setOpenSearch] = React.useState(false);
 
   // Keyboard shortcut for quick search (Ctrl/Cmd + K)
@@ -67,9 +67,6 @@ export default function CourteaseNavbar() {
       className="sticky top-0 z-50 w-full border-b border-slate-200/70 dark:border-slate-800/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-slate-950/50"
       style={
         {
-          // helpful CSS vars for accent styling
-          // You can move these into globals.css if preferred.
-          // @ts-ignore - CSSProperties allows custom props
           "--teal": "#14B8A6",
           "--teal-deep": "#0D9488",
           "--coral": "#F97316",
@@ -82,7 +79,10 @@ export default function CourteaseNavbar() {
           {/* Left: Brand */}
           <div className="flex items-center gap-2">
             <Link href="/" className="group flex items-center gap-2">
-              <div className="relative grid h-9 w-9 place-items-center rounded-2xl bg-[var(--teal)] text-white shadow-sm shadow-[var(--teal)]/30 ring-1 ring-white/10 dark:ring-slate-700">
+              <div
+                id="courtease-brand-icon"
+                className="relative grid h-9 w-9 place-items-center rounded-2xl bg-[var(--teal)] text-white shadow-sm shadow-[var(--teal)]/30 ring-1 ring-white/10 dark:ring-slate-700"
+              >
                 <Volleyball className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
               </div>
               <span className="font-semibold tracking-tight text-slate-800 dark:text-slate-100">
@@ -145,7 +145,7 @@ export default function CourteaseNavbar() {
               <Search className="h-5 w-5" />
             </Button>
 
-            <ThemeToggle theme={theme} setTheme={setTheme} />
+            <ThemeToggle theme={theme} resolvedTheme={resolvedTheme} setTheme={setTheme} />
 
             <div className="md:hidden">
               <Sheet>
@@ -251,6 +251,20 @@ function ThemeToggle({
   resolvedTheme?: string;
   setTheme: (t: string) => void;
 }) {
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <span
+        className="h-9 w-[132px] rounded-2xl border border-slate-200/80 bg-white/80 shadow-sm"
+        aria-hidden="true"
+      />
+    );
+  }
+
   // Pakai resolvedTheme biar akurat saat theme = "system"
   const isDark = (resolvedTheme ?? theme) === "dark";
 

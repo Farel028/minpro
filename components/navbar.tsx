@@ -47,7 +47,7 @@ const LINKS = [
 
 export default function CourteaseNavbar() {
   const pathname = usePathname() || "/";
-  const { theme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
   const [openSearch, setOpenSearch] = React.useState(false);
 
   // Keyboard shortcut for quick search (Ctrl/Cmd + K)
@@ -67,9 +67,6 @@ export default function CourteaseNavbar() {
       className="sticky top-0 z-50 w-full border-b border-slate-200/70 dark:border-slate-800/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-slate-950/50"
       style={
         {
-          // helpful CSS vars for accent styling
-          // You can move these into globals.css if preferred.
-          // @ts-ignore - CSSProperties allows custom props
           "--teal": "#14B8A6",
           "--teal-deep": "#0D9488",
           "--coral": "#F97316",
@@ -145,7 +142,7 @@ export default function CourteaseNavbar() {
               <Search className="h-5 w-5" />
             </Button>
 
-            <ThemeToggle theme={theme} setTheme={setTheme} />
+            <ThemeToggle theme={theme} resolvedTheme={resolvedTheme} setTheme={setTheme} />
 
             <div className="md:hidden">
               <Sheet>

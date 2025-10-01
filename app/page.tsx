@@ -1,105 +1,101 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <>
-      <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-        <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-          <Image
-            className="dark:invert"
-            src="/next.svg"
-            alt="Next.js logo"
-            width={180}
-            height={38}
-            priority
-          />
-          <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-            <li className="mb-2 tracking-[-.01em]">
-              Get started by editing{" "}
-              <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-                app/page.tsx
-              </code>
-              .
-            </li>
-            <li className="tracking-[-.01em]">
-              Save and see your changes instantly.
-            </li>
-          </ol>
-
-          <div className="flex gap-4 items-center flex-col sm:flex-row">
+    <main className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-6xl flex-col gap-16 px-4 pb-20 pt-16 sm:px-6 lg:px-8 lg:pt-24">
+      <section className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="space-y-6">
+          <span className="inline-flex items-center gap-2 rounded-full bg-teal-500/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-teal-700 dark:bg-teal-400/10 dark:text-teal-200">
+            Sewa lapangan tanpa ribet
+          </span>
+          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
+            Booking lapangan favorit dan temukan partner olahraga di satu tempat.
+          </h1>
+          <p className="text-base text-slate-600 dark:text-slate-300 sm:text-lg">
+            CourtEase mempermudah kamu mencari jadwal kosong, membayar sewa lapangan, dan mengatur komunitas olahraga. Semua dalam antarmuka yang ringan dan mendukung mode gelap.
+          </p>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <a
-              className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-              href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/register"
+              className="inline-flex items-center justify-center rounded-full bg-[#14B8A6] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#0D9488] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-200 focus-visible:ring-offset-2 dark:focus-visible:ring-teal-900/40 dark:focus-visible:ring-offset-slate-950"
             >
-              <Image
-                className="dark:invert"
-                src="/vercel.svg"
-                alt="Vercel logomark"
-                width={20}
-                height={20}
-              />
-              Deploy now
+              Mulai gratis
             </a>
             <a
-              className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-              href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/explore"
+              className="inline-flex items-center justify-center rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-800 transition hover:border-[#14B8A6] hover:text-[#14B8A6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-200 focus-visible:ring-offset-2 dark:border-white/10 dark:text-slate-100 dark:hover:border-[#14B8A6] dark:focus-visible:ring-teal-900/40 dark:focus-visible:ring-offset-slate-950"
             >
-              Read our docs
+              Jelajahi venue
             </a>
           </div>
-        </main>
-        <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-          <a
-            className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              aria-hidden
-              src="/file.svg"
-              alt="File icon"
-              width={16}
-              height={16}
-            />
-            Learn
-          </a>
-          <a
-            className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              aria-hidden
-              src="/window.svg"
-              alt="Window icon"
-              width={16}
-              height={16}
-            />
-            Examples
-          </a>
-          <a
-            className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-            href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              aria-hidden
-              src="/globe.svg"
-              alt="Globe icon"
-              width={16}
-              height={16}
-            />
-            Go to nextjs.org →
-          </a>
-        </footer>
-      </div>
-    </>
+        </div>
+        <div className="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white p-6 shadow-xl dark:border-white/5 dark:bg-slate-950/60">
+          <div className="absolute -top-20 right-10 h-40 w-40 rounded-full bg-[#14B8A6]/20 blur-3xl" />
+          <div className="absolute -bottom-24 left-6 h-48 w-48 rounded-full bg-[#F97316]/10 blur-3xl" />
+          <div className="relative space-y-4">
+            <div className="flex items-center justify-between rounded-2xl border border-slate-100/80 bg-slate-50/60 px-5 py-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">
+                  Jadwal berikutnya
+                </p>
+                <p className="mt-1 text-base font-semibold text-slate-900 dark:text-white">
+                  Lapangan Futsal Galaxy
+                </p>
+              </div>
+              <span className="rounded-full bg-[#14B8A6]/10 px-3 py-1 text-xs font-medium text-[#0D9488] dark:bg-[#14B8A6]/15 dark:text-[#5eead4]">
+                17.30 WIB
+              </span>
+            </div>
+            <div className="rounded-2xl border border-slate-100/80 bg-white/70 p-5 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+              <h2 className="text-sm font-semibold text-slate-900 dark:text-white">Community meetup</h2>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-300">
+                Gabung sesi sparring setiap Kamis dan dapatkan partner latihan yang seimbang.
+              </p>
+              <div className="mt-4 flex items-center gap-2">
+                {["/avatars/1.png", "/avatars/2.png", "/avatars/3.png"].map((src) => (
+                  <span
+                    key={src}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white bg-gradient-to-br from-[#14B8A6] to-[#0D9488] text-xs font-semibold text-white shadow-sm dark:border-slate-900"
+                  >
+                    CE
+                  </span>
+                ))}
+                <span className="text-xs font-medium text-slate-500 dark:text-slate-300">+120 anggota</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-6 rounded-3xl border border-slate-200/80 bg-white p-6 shadow-lg dark:border-white/10 dark:bg-slate-950/60 sm:grid-cols-3">
+        {FEATURES.map((feature) => (
+          <div key={feature.title} className="space-y-3">
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[#14B8A6]/10 text-[#0D9488] dark:bg-[#14B8A6]/15 dark:text-[#5eead4]">
+              {feature.emoji}
+            </span>
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+              {feature.title}
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-300">{feature.description}</p>
+          </div>
+        ))}
+      </section>
+    </main>
   );
 }
+
+const FEATURES = [
+  {
+    emoji: "📅",
+    title: "Jadwal real-time",
+    description: "Lihat ketersediaan lapangan dan pesan slot terbaik tanpa harus menelepon pengelola.",
+  },
+  {
+    emoji: "🤝",
+    title: "Komunitas aktif",
+    description: "Temukan partner olahraga yang sefrekuensi dan bangun komunitasmu sendiri di CourtEase.",
+  },
+  {
+    emoji: "💳",
+    title: "Pembayaran aman",
+    description: "Dukungan multi-metode pembayaran dengan riwayat transaksi yang transparan dan mudah dilacak.",
+  },
+] as const;

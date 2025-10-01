@@ -182,10 +182,13 @@ export default function NotFound404() {
             </motion.svg>
 
             {/* Grass PNG foreground overlay */}
-            <img
+            <Image
               src="/grass.png"
-              alt="Semak/rumput"
-              className="absolute inset-x-0 bottom-0 w-full select-none pointer-events-none"
+              alt="Ilustrasi semak dan rumput"
+              fill
+              priority={false}
+              className="absolute inset-x-0 bottom-0 w-full select-none pointer-events-none object-cover"
+              sizes="(max-width: 768px) 90vw, 420px"
             />
           </div>
         </motion.aside>

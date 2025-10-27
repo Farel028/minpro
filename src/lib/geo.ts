@@ -1,5 +1,4 @@
 import type { Quest } from "@/data/quests";
-import type { Umkm } from "@/data/umkm";
 
 export interface GeoPoint {
   lat: number;
@@ -23,10 +22,4 @@ export function findNearestQuest(point: GeoPoint, quests: Quest[]) {
   return quests
     .map((quest) => ({ quest, distance: distMeters(point, quest.coord) }))
     .sort((a, b) => a.distance - b.distance)[0];
-}
-
-export function sortUmkmByDistance(point: GeoPoint, umkm: Umkm[]) {
-  return [...umkm]
-    .map((item) => ({ item, distance: distMeters(point, item.coord) }))
-    .sort((a, b) => a.distance - b.distance);
 }

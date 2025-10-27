@@ -1,4 +1,15 @@
-export type QuestKey = "peneleh" | "ampel" | "dolly" | "strenkali";
+export type QuestKey =
+  | "tugu-pahlawan"
+  | "museum-surabaya"
+  | "monkasel"
+  | "balai-pemuda";
+
+export interface QuestMedia {
+  type: "video" | "image";
+  src: string;
+  poster?: string;
+  caption: string;
+}
 
 export interface Quest {
   key: QuestKey;
@@ -9,40 +20,67 @@ export interface Quest {
     lon: number;
   };
   tags: string[];
+  media: QuestMedia;
 }
 
 export const QUESTS: Quest[] = [
   {
-    key: "peneleh",
-    title: "Peneleh",
+    key: "tugu-pahlawan",
+    title: "Monumen Tugu Pahlawan",
     story:
-      "Kampung tua di Surabaya dengan jejak sejarah pergerakan nasional dan rumah-rumah kolonial yang masih terjaga.",
-    coord: { lat: -7.2496, lon: 112.7396 },
-    tags: ["heritage", "sejarah", "urban"]
+      "Monumen utama kota Surabaya yang memperingati pertempuran 10 November dan menjadi simbol keberanian arek Suroboyo.",
+    coord: { lat: -7.245786, lon: 112.737828 },
+    tags: ["monumen", "sejarah", "kemerdekaan"],
+    media: {
+      type: "video",
+      src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+      poster:
+        "https://upload.wikimedia.org/wikipedia/commons/9/9d/Tugu_Pahlawan_Surabaya.jpg",
+      caption:
+        "Cuplikan arsip peringatan hari pahlawan yang menampilkan suasana upacara di kawasan Tugu Pahlawan."
+    }
   },
   {
-    key: "ampel",
-    title: "Ampel",
+    key: "museum-surabaya",
+    title: "Museum Surabaya (Gedung Siola)",
     story:
-      "Kampung religi dengan Masjid Sunan Ampel dan suasana arabesque yang kental, pusat kuliner dan ziarah.",
-    coord: { lat: -7.2262, lon: 112.7447 },
-    tags: ["religi", "kuliner", "ziarah"]
+      "Gedung bersejarah yang menjadi saksi perkembangan perdagangan hingga pergerakan rakyat Surabaya sepanjang abad ke-20.",
+    coord: { lat: -7.257548, lon: 112.737437 },
+    tags: ["museum", "arsip", "perdagangan"],
+    media: {
+      type: "image",
+      src: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Gedung_Siola_Surabaya.jpg",
+      caption:
+        "Foto arsip fasad Gedung Siola yang kini difungsikan sebagai Museum Surabaya dengan koleksi memorabilia kota."
+    }
   },
   {
-    key: "dolly",
-    title: "Dolly Reborn",
+    key: "monkasel",
+    title: "Monumen Kapal Selam",
     story:
-      "Kebangkitan kawasan Dolly sebagai ruang kreatif warga dengan UMKM baru dan narasi pemberdayaan.",
-    coord: { lat: -7.2738, lon: 112.7135 },
-    tags: ["kreatif", "transformasi", "komunitas"]
+      "Kapal selam KRI Pasopati 410 yang dialihfungsikan menjadi museum pendidikan maritim dan menjadi ikon tepi Kalimas.",
+    coord: { lat: -7.26284, lon: 112.750836 },
+    tags: ["maritim", "angkatan laut", "museum"],
+    media: {
+      type: "image",
+      src: "https://upload.wikimedia.org/wikipedia/commons/0/0d/Monumen_Kapal_Selam_Surabaya.jpg",
+      caption:
+        "Potret interior Monkasel yang memperlihatkan ruang kendali asli kapal selam diesel era 1950-an."
+    }
   },
   {
-    key: "strenkali",
-    title: "Strenkali",
+    key: "balai-pemuda",
+    title: "Balai Pemuda",
     story:
-      "Permukiman bantaran kali yang bertransformasi melalui gerakan warga menjaga lingkungan dan seni mural.",
-    coord: { lat: -7.283, lon: 112.732 },
-    tags: ["lingkungan", "komunitas", "mural"]
+      "Kompleks kesenian Art Deco yang menampung berbagai pertunjukan budaya dan aktivitas kreatif warga Surabaya.",
+    coord: { lat: -7.262185, lon: 112.743461 },
+    tags: ["art deco", "kebudayaan", "pertunjukan"],
+    media: {
+      type: "image",
+      src: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Balai_Pemuda_Surabaya.jpg",
+      caption:
+        "Dokumentasi gedung Balai Pemuda pada malam hari dengan pencahayaan yang menonjolkan detail Art Deco."
+    }
   }
 ];
 

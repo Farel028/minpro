@@ -1,12 +1,12 @@
 # Surabaya Heritage Quest
 
-A mobile-first Next.js (App Router) prototype that menggabungkan AR marker Hiro, geolocation, dan gamifikasi ringan untuk mengenalkan kampung-kampung bersejarah di Surabaya.
+A mobile-first Next.js (App Router) prototype that menggabungkan AR berbasis GPS, geolocation, dan gamifikasi ringan untuk mengenalkan situs-situs bersejarah di Surabaya.
 
 ## Fitur
 
-- **Landing Page** dengan daftar quest kampung, paspor lencana dari localStorage, dan daftar UMKM.
-- **AR Overlay** berbasis A-Frame + AR.js untuk marker Hiro, plus Demo Mode tanpa kamera.
-- **Geolocation** untuk mendeteksi kampung terdekat dan mengurutkan UMKM.
+- **Landing Page** dengan daftar quest situs sejarah dan paspor lencana dari localStorage.
+- **AR Overlay** berbasis A-Frame + AR.js dengan marker hologram yang muncul di koordinat GPS, plus Demo Mode tanpa kamera.
+- **Geolocation** untuk mendeteksi situs terdekat dan menampilkan jarak di landing page.
 - **Progress Badges** yang disimpan di `localStorage` (`shq_badges_v1`).
 
 ## Teknologi
@@ -34,6 +34,6 @@ A mobile-first Next.js (App Router) prototype that menggabungkan AR marker Hiro,
 
 ## Catatan
 
-- Untuk AR Mode, gunakan marker Hiro: <https://raw.githubusercontent.com/AR-js-org/AR.js/master/three.js/examples/marker-training/examples/pattern-files/hiro.png>
+- Mode AR memerlukan izin kamera dan GPS agar marker hologram dapat muncul di lokasi sebenarnya.
 - Demo Mode berguna untuk presentasi indoor tanpa kamera.
 - Fitur geolocation membutuhkan izin pengguna dan akan menampilkan toast hasil deteksi.

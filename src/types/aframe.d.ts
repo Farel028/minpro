@@ -1,14 +1,18 @@
 import type { DetailedHTMLProps, HTMLAttributes } from "react";
 
+type AFrameElement = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & {
+  [key: string]: unknown;
+};
+
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      "a-scene": DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>;
-      "a-entity": DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>;
-      "a-marker": DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>;
-      "a-box": DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>;
-      "a-cylinder": DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>;
-      "a-text": DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>;
+      "a-scene": AFrameElement;
+      "a-marker": AFrameElement;
+      "a-box": AFrameElement;
+      "a-cylinder": AFrameElement;
+      "a-text": AFrameElement;
+      "a-entity": AFrameElement;
     }
   }
 }

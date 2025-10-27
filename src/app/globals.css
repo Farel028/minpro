@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-night-sky text-slate-100 min-h-screen font-sans;
+}
+
+a {
+  @apply text-brand hover:text-cyan-300 transition-colors;
+}
+
+button:focus-visible,
+[role="button"]:focus-visible {
+  @apply outline outline-2 outline-offset-2 outline-brand;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.toast-pop {
+  animation: toast-in 180ms ease-out;
+}

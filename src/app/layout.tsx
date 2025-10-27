@@ -4,7 +4,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Surabaya Heritage Quest",
-  description: "Eksplor kampung-kampung Surabaya dengan AR marker Hiro dan quest gamified"
+  description:
+    "Eksplor situs sejarah Surabaya dengan AR berbasis GPS dan quest gamified"
 };
 
 export default function RootLayout({

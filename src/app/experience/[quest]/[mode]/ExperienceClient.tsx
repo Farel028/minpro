@@ -6,7 +6,7 @@ import { useBadges } from "@/lib/badges";
 import clsx from "clsx";
 import Script from "next/script";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 interface ExperienceClientProps {
   questKey: QuestKey;
@@ -19,6 +19,7 @@ function ExperienceOverlay({ questKey, mode }: ExperienceClientProps) {
   const { notify } = useToast();
   const { addBadge, hasBadge } = useBadges();
   const [infoOpen, setInfoOpen] = useState(true);
+  const [mediaVisible, setMediaVisible] = useState(false);
 
   useEffect(() => {
     const previous = document.body.style.overflow;
@@ -30,37 +31,72 @@ function ExperienceOverlay({ questKey, mode }: ExperienceClientProps) {
 
   useEffect(() => {
     if (mode === "ar") {
-      notify("Arahkan kamera ke marker Hiro untuk memulai quest.");
+      notify(
+        "Aktifkan layanan lokasi lalu dekati koordinat situs untuk memunculkan marker hologram."
+      );
+      setMediaVisible(false);
     } else {
-      notify("Demo Mode aktif — kamera tidak diperlukan.");
+      notify("Demo Mode aktif — kamera dan GPS tidak diperlukan.");
+      setMediaVisible(true);
     }
   }, [mode, notify]);
 
   useEffect(() => {
     if (mode !== "ar") return;
+
+    let hasAnnounced = false;
+    const handleGps = () => {
+      if (!hasAnnounced) {
+        hasAnnounced = true;
+        notify("Lokasi ditemukan. Sentuh marker hologram untuk membuka arsip situs.");
+      }
+    };
+
+    window.addEventListener("gps-camera-update-position", handleGps as EventListener);
+    return () => {
+      window.removeEventListener(
+        "gps-camera-update-position",
+        handleGps as EventListener
+      );
+    };
+  }, [mode, notify]);
+
+  const revealMedia = useCallback(() => {
+    setMediaVisible((prev) => {
+      if (!prev) {
+        notify("Menampilkan arsip situs di overlay.");
+      }
+      return true;
+    });
+  }, [notify]);
+
+  useEffect(() => {
+    if (mode !== "ar") return;
     let timeout: ReturnType<typeof setTimeout> | undefined;
+    let cleanup: (() => void) | undefined;
 
     const attachListener = () => {
-      const marker = document.querySelector("a-marker");
-      if (!marker) {
+      const entity = document.querySelector("[data-quest-entity]");
+      if (!entity) {
         timeout = setTimeout(attachListener, 300);
         return;
       }
-      const handleFound = () => {
-        notify("Marker terdeteksi — baca overlay lalu selesaikan quest.");
+      const handleClick = () => {
+        revealMedia();
       };
-      marker.addEventListener("markerFound", handleFound);
-      return () => {
-        marker.removeEventListener("markerFound", handleFound);
+      entity.addEventListener("click", handleClick);
+      cleanup = () => {
+        entity.removeEventListener("click", handleClick);
       };
     };
 
-    const cleanup = attachListener();
+    attachListener();
+
     return () => {
       if (cleanup) cleanup();
       if (timeout) clearTimeout(timeout);
     };
-  }, [mode, notify]);
+  }, [mode, revealMedia]);
 
   const questTitle = useMemo(
     () => (mode === "demo" ? `${quest.title} — DEMO` : quest.title),
@@ -137,6 +173,56 @@ function ExperienceOverlay({ questKey, mode }: ExperienceClientProps) {
           <p className="mt-3 text-xs uppercase tracking-wide text-brand">
             {quest.tags.join(" • ")}
           </p>
+          <p className="mt-3 text-[11px] font-mono text-slate-400">
+            Koordinat: {quest.coord.lat.toFixed(6)}, {quest.coord.lon.toFixed(6)}
+          </p>
+        </div>
+
+        <div className="pointer-events-auto max-w-lg rounded-3xl border border-white/10 bg-black/60 p-5 shadow-xl backdrop-blur">
+          <div className="mb-3 flex items-center justify-between">
+            <h3 className="text-lg font-semibold">Arsip Situs</h3>
+            <button
+              className="rounded-full border border-white/30 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white"
+              onClick={() => {
+                if (mediaVisible) {
+                  setMediaVisible(false);
+                } else {
+                  revealMedia();
+                }
+              }}
+            >
+              {mediaVisible ? "Tutup" : "Buka"}
+            </button>
+          </div>
+          {mediaVisible ? (
+            <div className="space-y-3">
+              {quest.media.type === "video" ? (
+                <video
+                  className="w-full rounded-2xl border border-white/10"
+                  controls
+                  playsInline
+                  poster={quest.media.poster}
+                >
+                  <source src={quest.media.src} />
+                  Browser tidak mendukung pemutar video bawaan.
+                </video>
+              ) : (
+                <img
+                  src={quest.media.src}
+                  alt={`Arsip ${quest.title}`}
+                  className="w-full rounded-2xl border border-white/10 object-cover"
+                />
+              )}
+              <p className="text-xs text-slate-200">{quest.media.caption}</p>
+            </div>
+          ) : (
+            <button
+              className="w-full rounded-2xl border border-dashed border-white/30 px-4 py-6 text-sm font-semibold uppercase tracking-[0.3em] text-slate-200"
+              onClick={revealMedia}
+            >
+              Sentuh marker AR untuk membuka arsip
+            </button>
+          )}
         </div>
       </div>
 
@@ -146,34 +232,45 @@ function ExperienceOverlay({ questKey, mode }: ExperienceClientProps) {
             embedded
             vr-mode-ui="false"
             renderer="logarithmicDepthBuffer: true"
-            arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+            arjs="sourceType: webcam; debugUIEnabled: false; videoTexture: true;"
             className="h-full w-full"
           >
-            <a-marker preset="hiro">
-              <a-box
-                position="0 0.5 0"
-                depth="0.8"
-                height="0.8"
-                width="0.8"
-                color="#22d3ee"
-                opacity="0.85"
-              ></a-box>
+            <a-entity
+              data-quest-entity
+              className="clickable"
+              gps-entity-place={`latitude: ${quest.coord.lat}; longitude: ${quest.coord.lon};`}
+              look-at="[gps-camera]"
+              scale="2.5 2.5 2.5"
+            >
               <a-cylinder
-                position="0 0.1 0"
-                radius="0.3"
-                height="0.2"
+                position="0 0.6 0"
+                radius="0.4"
+                height="0.3"
                 color="#0f172a"
                 opacity="0.9"
               ></a-cylinder>
+              <a-sphere
+                position="0 1.1 0"
+                radius="0.35"
+                color="#22d3ee"
+                opacity="0.85"
+                animation__pulse="property=scale; dir=alternate; dur=1400; loop=true; to:1.2 1.2 1.2"
+              ></a-sphere>
               <a-text
                 value={quest.title}
-                position="0 1.1 0"
+                position="0 1.8 0"
                 align="center"
                 color="#f8fafc"
-                width="3"
+                width="6"
               ></a-text>
-            </a-marker>
-            <a-entity camera></a-entity>
+            </a-entity>
+            <a-camera
+              gps-camera
+              rotation-reader
+              position="0 0 0"
+              cursor="fuse: false; rayOrigin: mouse"
+              raycaster="objects: .clickable"
+            ></a-camera>
           </a-scene>
         ) : (
           <div className="flex h-full flex-col items-center justify-center gap-6 bg-[radial-gradient(circle_at_center,#0f172a,transparent_70%)]">
